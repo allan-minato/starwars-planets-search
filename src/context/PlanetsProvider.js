@@ -5,6 +5,11 @@ import PlanetsContext from './PlanetsContext';
 export default function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState({
+    column: 'population',
+    condition: 'maior que',
+    value: '0',
+  });
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -29,7 +34,9 @@ export default function PlanetsProvider({ children }) {
     setPlanets,
     nameFilter,
     setNameFilter,
-  }), [planets, nameFilter]);
+    selectedFilter,
+    setSelectedFilter,
+  }), [planets, nameFilter, selectedFilter]);
 
   return (
     <PlanetsContext.Provider value={ value }>
