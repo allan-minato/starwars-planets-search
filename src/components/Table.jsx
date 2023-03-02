@@ -8,6 +8,8 @@ export default function Table() {
     setNameFilter,
     selectedFilter,
     setSelectedFilter,
+    usedColumns,
+    setUsedColumns,
   } = useContext(PlanetsContext);
 
   const filteredPlanets = planets.filter((planet) => {
@@ -23,6 +25,9 @@ export default function Table() {
 
   const handleClick = () => {
     setPlanets(filteredPlanets);
+    if (filteredPlanets.column !== '') {
+      setUsedColumns([...usedColumns, selectedFilter.column]);
+    }
   };
 
   return (
@@ -42,36 +47,26 @@ export default function Table() {
             (e) => setSelectedFilter({ ...selectedFilter, column: e.target.value })
           }
         >
-          <option
-            value="population"
-          >
-            population
+          {/* {console.log(usedColumns)} */}
+          { usedColumns.includes('population') ? '' : (
+            <option value="population">population</option>
+          ) }
 
-          </option>
-          <option
-            value="orbital_period"
-          >
-            orbital_period
+          { usedColumns.includes('orbital_period') ? '' : (
+            <option value="orbital_period">orbital_period</option>
+          ) }
 
-          </option>
-          <option
-            value="diameter"
-          >
-            diameter
+          { usedColumns.includes('diameter') ? '' : (
+            <option value="diameter">diameter</option>
+          ) }
 
-          </option>
-          <option
-            value="rotation_period"
-          >
-            rotation_period
+          {usedColumns.includes('rotation_period') ? '' : (
+            <option value="rotation_period">rotation_period</option>
+          ) }
 
-          </option>
-          <option
-            value="surface_water"
-          >
-            surface_water
-
-          </option>
+          { usedColumns.includes('surface_water') ? '' : (
+            <option value="surface_water"> surface_water</option>
+          ) }
         </select>
         <select
           data-testid="comparison-filter"

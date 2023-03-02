@@ -10,6 +10,7 @@ export default function PlanetsProvider({ children }) {
     condition: 'maior que',
     value: '0',
   });
+  const [usedColumns, setUsedColumns] = useState([]);
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -36,7 +37,9 @@ export default function PlanetsProvider({ children }) {
     setNameFilter,
     selectedFilter,
     setSelectedFilter,
-  }), [planets, nameFilter, selectedFilter]);
+    usedColumns,
+    setUsedColumns,
+  }), [planets, nameFilter, selectedFilter, usedColumns]);
 
   return (
     <PlanetsContext.Provider value={ value }>
