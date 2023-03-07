@@ -32,20 +32,6 @@ export default function Table() {
     });
     setOptions(usedOption);
     // console.log(usedOption[0]);
-    const objeto = {
-      nome: 'allan',
-    };
-    const objeto2 = {
-      sobrenome: 'minato',
-    };
-    console.log(objeto);
-    console.log(objeto2);
-    const novoObjeto = {
-      ...objeto,
-      ...objeto2,
-      nome: 'Pedro',
-    };
-    console.log(novoObjeto);
   };
 
   return (
@@ -96,9 +82,6 @@ export default function Table() {
         </button>
       </div>
       <table>
-        {/* {console.log(selectedFilter.column)}
-        {console.log(selectedFilter.condition)}
-        {console.log(selectedFilter.value)} */}
         <thead>
           <tr>
             <th>Name</th>
