@@ -8,8 +8,8 @@ export default function Table() {
     setNameFilter,
     selectedFilter,
     setSelectedFilter,
-    usedColumns,
-    setUsedColumns,
+    options,
+    setOptions,
   } = useContext(PlanetsContext);
 
   const filteredPlanets = planets.filter((planet) => {
@@ -25,9 +25,27 @@ export default function Table() {
 
   const handleClick = () => {
     setPlanets(filteredPlanets);
-    if (filteredPlanets.column !== '') {
-      setUsedColumns([...usedColumns, selectedFilter.column]);
-    }
+    const usedOption = options.filter((option) => option !== selectedFilter.column);
+    setSelectedFilter({
+      ...selectedFilter,
+      column: usedOption[0],
+    });
+    setOptions(usedOption);
+    // console.log(usedOption[0]);
+    const objeto = {
+      nome: 'allan',
+    };
+    const objeto2 = {
+      sobrenome: 'minato',
+    };
+    console.log(objeto);
+    console.log(objeto2);
+    const novoObjeto = {
+      ...objeto,
+      ...objeto2,
+      nome: 'Pedro',
+    };
+    console.log(novoObjeto);
   };
 
   return (
@@ -47,26 +65,10 @@ export default function Table() {
             (e) => setSelectedFilter({ ...selectedFilter, column: e.target.value })
           }
         >
-          {/* {console.log(usedColumns)} */}
-          { usedColumns.includes('population') ? '' : (
-            <option value="population">population</option>
-          ) }
-
-          { usedColumns.includes('orbital_period') ? '' : (
-            <option value="orbital_period">orbital_period</option>
-          ) }
-
-          { usedColumns.includes('diameter') ? '' : (
-            <option value="diameter">diameter</option>
-          ) }
-
-          {usedColumns.includes('rotation_period') ? '' : (
-            <option value="rotation_period">rotation_period</option>
-          ) }
-
-          { usedColumns.includes('surface_water') ? '' : (
-            <option value="surface_water"> surface_water</option>
-          ) }
+          {options.map((option) => (
+            <option key={ option } value={ option }>
+              {option}
+            </option>))}
         </select>
         <select
           data-testid="comparison-filter"

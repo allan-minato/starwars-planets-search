@@ -12,6 +12,14 @@ export default function PlanetsProvider({ children }) {
   });
   const [usedColumns, setUsedColumns] = useState([]);
 
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   useEffect(() => {
     const fetchAPI = async () => {
       try {
@@ -39,7 +47,9 @@ export default function PlanetsProvider({ children }) {
     setSelectedFilter,
     usedColumns,
     setUsedColumns,
-  }), [planets, nameFilter, selectedFilter, usedColumns]);
+    options,
+    setOptions,
+  }), [planets, nameFilter, selectedFilter, usedColumns, options]);
 
   return (
     <PlanetsContext.Provider value={ value }>
