@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Table() {
-  const { planets,
+  const {
+    planetsClean,
+    planets,
     setPlanets,
     nameFilter,
     setNameFilter,
@@ -10,6 +12,8 @@ export default function Table() {
     setSelectedFilter,
     options,
     setOptions,
+    appliedFilters,
+    setAppliedFilters,
   } = useContext(PlanetsContext);
 
   const filteredPlanets = planets.filter((planet) => {
@@ -22,6 +26,46 @@ export default function Table() {
     }
     return planetValue === filterValue;
   });
+  const addFilter = (filter) => {
+    setAppliedFilters([...appliedFilters, filter]);
+  };
+
+  const removeFilter = (index) => {
+    // const filterToRemove = options.filter((filter) => filter !== index);
+    console.log(index);
+    const appliedFilterValue = appliedFilters.filter((filter) => filter.column !== index);
+    console.log(appliedFilterValue);
+    if (appliedFilterValue.length === 0) {
+      setPlanets(planetsClean);
+    }
+    appliedFilterValue.forEach((filter) => {
+      const filtered = planetsClean.filter((planet) => {
+        const planetValue = Number(planet[filter.column]);
+        const filterValue = Number(filter.value);
+        if (filter.condition === 'maior que') {
+          return planetValue > filterValue;
+        } if (filter.condition === 'menor que') {
+          return planetValue < filterValue;
+        }
+        return planetValue === filterValue;
+      });
+      setPlanets(filtered);
+    });
+    setOptions([...options, index]);
+    setAppliedFilters(appliedFilterValue);
+  };
+
+  const removeAllFilter = () => {
+    setAppliedFilters([]);
+    setOptions([
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ]);
+    setPlanets([...planetsClean]);
+  };
 
   const handleClick = () => {
     setPlanets(filteredPlanets);
@@ -31,9 +75,10 @@ export default function Table() {
       column: usedOption[0],
     });
     setOptions(usedOption);
+    addFilter(selectedFilter);
     // console.log(usedOption[0]);
+    console.log(selectedFilter);
   };
-
   return (
     <section>
       <div>
@@ -80,7 +125,29 @@ export default function Table() {
         >
           FILTRAR
         </button>
+        <button
+          data-testid="button-remove-filters"
+          onClick={ removeAllFilter }
+        >
+          Remover todos os filtros
+        </button>
       </div>
+      {appliedFilters.map((filter, index) => (
+        <span
+          data-testid="filter"
+          key={ index }
+        >
+          {`${filter.column}`}
+          <button
+            // data-testid="filter"
+            key={ index }
+            onClick={ () => removeFilter(filter.column) }
+          >
+            X
+          </button>
+        </span>
+      ))}
+      <div />
       <table>
         <thead>
           <tr>
