@@ -22,24 +22,7 @@ export default function PlanetsProvider({ children }) {
   ]);
 
   const [appliedFilters, setAppliedFilters] = useState([]);
-
-  useEffect(() => {
-    const fetchAPI = async () => {
-      try {
-        const response = await fetch('https://swapi.dev/api/planets');
-        if (!response.ok) {
-          const data = await response.json();
-          throw data.message;
-        }
-        const data = await response.json();
-        const { results } = data;
-        setPlanetsClean(results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchAPI();
-  }, []);
+  const [order, setOrder] = useState({ column: 'population', sort: 'ASC' });
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -61,6 +44,8 @@ export default function PlanetsProvider({ children }) {
   }, []);
 
   const value = useMemo(() => ({
+    order,
+    setOrder,
     planetsClean,
     setPlanetsClean,
     planets,
@@ -76,7 +61,7 @@ export default function PlanetsProvider({ children }) {
     appliedFilters,
     setAppliedFilters,
   }), [planets, nameFilter, selectedFilter, usedColumns, options, appliedFilters,
-    planetsClean]);
+    planetsClean, order]);
 
   return (
     <PlanetsContext.Provider value={ value }>

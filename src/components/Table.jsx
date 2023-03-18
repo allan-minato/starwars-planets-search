@@ -93,7 +93,7 @@ export default function Table() {
           data-testid="column-filter"
           value={ selectedFilter.column }
           onChange={
-            (e) => setSelectedFilter({ ...selectedFilter, column: e.target.value })
+            (e) => { setSelectedFilter({ ...selectedFilter, column: e.target.value }); }
           }
         >
           {options.map((option) => (
@@ -173,7 +173,9 @@ export default function Table() {
               <tr
                 key={ planet.name }
               >
-                <td>
+                <td
+                  data-testid="planet-name"
+                >
                   { planet.name }
                 </td>
                 <td>{ planet.rotation_period }</td>
