@@ -26,19 +26,11 @@ export default function PlanetsProvider({ children }) {
 
   useEffect(() => {
     const fetchAPI = async () => {
-      try {
-        const response = await fetch('https://swapi.dev/api/planets');
-        if (!response.ok) {
-          const data = await response.json();
-          throw data.message;
-        }
-        const data = await response.json();
-        const { results } = data;
-        setPlanets(results);
-        setPlanetsClean(results);
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await fetch('https://swapi.dev/api/planets');
+      const data = await response.json();
+      const { results } = data;
+      setPlanets(results);
+      setPlanetsClean(results);
     };
     fetchAPI();
   }, []);

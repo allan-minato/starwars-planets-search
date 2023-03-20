@@ -31,10 +31,7 @@ export default function Table() {
   };
 
   const removeFilter = (index) => {
-    // const filterToRemove = options.filter((filter) => filter !== index);
-    console.log(index);
     const appliedFilterValue = appliedFilters.filter((filter) => filter.column !== index);
-    console.log(appliedFilterValue);
     if (appliedFilterValue.length === 0) {
       setPlanets(planetsClean);
     }
@@ -76,8 +73,6 @@ export default function Table() {
     });
     setOptions(usedOption);
     addFilter(selectedFilter);
-    // console.log(usedOption[0]);
-    console.log(selectedFilter);
   };
   return (
     <section>
